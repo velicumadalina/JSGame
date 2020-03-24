@@ -26,25 +26,28 @@ let score = 0;
 let gameOver = false;
 
 function preload() {
-    this.load.image('ground', '../static/platform.png');
-    this.load.image('tp', '../static/star.png');
+    this.load.image('background', '../static/background.png');
+    this.load.image('ground', '../static/ground.png');
+    this.load.image('tp', '../static/roll.png');
     this.load.image('corona', '../static/corona.png');
-    this.load.spritesheet('dude', '../static/spritesheet.png', {frameWidth: 45, frameHeight: 38});
+    this.load.image('bricks', '../static/bricks.png');
+    this.load.spritesheet('dude', '../static/mario.png', {frameWidth: 45, frameHeight: 38});
 }
 
 function create() {
+    this.add.image(900, 400, 'background');
     platforms = this.physics.add.staticGroup();
 
-    platforms.create(1000, 768, 'ground').setScale(5).refreshBody();
+    platforms.create(300, 800, 'ground').setScale().refreshBody();
 
-    platforms.create(550, 550, 'ground');
-    platforms.create(300, 400, 'ground');
-    platforms.create(1600, 400, 'ground');
-    platforms.create(850, 350, 'ground');
-    platforms.create(1200, 550, 'ground');
-    platforms.create(1400, 250, 'ground');
-    platforms.create(400, 170, 'ground');
-    platforms.create(1100, 100, 'ground');
+    platforms.create(500, 550, 'bricks');
+    platforms.create(300, 400, 'bricks');
+    platforms.create(1600, 400, 'bricks');
+    platforms.create(850, 350, 'bricks');
+    platforms.create(1200, 550, 'bricks');
+    platforms.create(1400, 250, 'bricks');
+    platforms.create(400, 170, 'bricks');
+    platforms.create(1100, 100, 'bricks');
     player = this.physics.add.sprite(100, 450, 'dude');
     player.body.setGravityY(300);
     player.setBounce(0.2);
