@@ -41,13 +41,13 @@ function create() {
     platforms.create(300, 800, 'ground').setScale().refreshBody();
 
     platforms.create(500, 550, 'bricks');
-    platforms.create(300, 400, 'bricks');
-    platforms.create(1600, 400, 'bricks');
-    platforms.create(850, 350, 'bricks');
-    platforms.create(1200, 550, 'bricks');
-    platforms.create(1400, 250, 'bricks');
-    platforms.create(400, 170, 'bricks');
-    platforms.create(1100, 100, 'bricks');
+    // platforms.create(300, 400, 'bricks');
+    // platforms.create(1600, 400, 'bricks');
+    // platforms.create(850, 350, 'bricks');
+    // platforms.create(1200, 550, 'bricks');
+    // platforms.create(1400, 250, 'bricks');
+    // platforms.create(400, 170, 'bricks');
+    // platforms.create(1100, 100, 'bricks');
     player = this.physics.add.sprite(100, 450, 'dude');
     player.body.setGravityY(300);
     player.setBounce(0.2);
@@ -74,37 +74,37 @@ function create() {
     });
     tp = this.physics.add.staticGroup();
     tp.create(550, 530, 'tp');
-    tp.create(300, 370, 'tp');
-    tp.create(850, 320, 'tp');
-    tp.create(1200, 520, 'tp');
-    tp.create(1400, 220, 'tp');
-    tp.create(400, 150, 'tp');
-    tp.create(1100, 70, 'tp');
-    tp.create(430, 370, 'tp');
-    tp.create(1650, 370, 'tp');
-    tp.create(950, 320, 'tp');
-    tp.create(1300, 520, 'tp');
-    tp.create(1500, 220, 'tp');
-    tp.create(500, 150, 'tp');
-    tp.create(650, 530, 'tp');
-    tp.create(200, 370, 'tp');
-    tp.create(850, 320, 'tp');
-    tp.create(1400, 520, 'tp');
-    tp.create(350, 150, 'tp');
-    tp.create(990, 70, 'tp');
+    // tp.create(300, 370, 'tp');
+    // tp.create(850, 320, 'tp');
+    // tp.create(1200, 520, 'tp');
+    // tp.create(1400, 220, 'tp');
+    // tp.create(400, 150, 'tp');
+    // tp.create(1100, 70, 'tp');
+    // tp.create(430, 370, 'tp');
+    // tp.create(1650, 370, 'tp');
+    // tp.create(950, 320, 'tp');
+    // tp.create(1300, 520, 'tp');
+    // tp.create(1500, 220, 'tp');
+    // tp.create(500, 150, 'tp');
+    // tp.create(650, 530, 'tp');
+    // tp.create(200, 370, 'tp');
+    // tp.create(850, 320, 'tp');
+    // tp.create(1400, 520, 'tp');
+    // tp.create(350, 150, 'tp');
+    // tp.create(990, 70, 'tp');
 
     corona = this.physics.add.group({
-        key: 'corona',
-        repeat: 3,
-        setXY: {x: 200, y: -100, stepX: 600}
+        // key: 'corona',
+        // repeat: 3,
+        // setXY: {x: 200, y: -100, stepX: 600}
     });
 
     corona.children.iterate(function (child) {
 
-        child.setBounceY(1);
-        child.setBounceX(1);
-        child.setVelocity(300, 300);
-        child.setCollideWorldBounds(true);
+        // child.setBounceY(1);
+        // child.setBounceX(1);
+        // child.setVelocity(300, 300);
+        // child.setCollideWorldBounds(true);
 
     });
     scoreText = this.add.text(16, 16, 'score: 0', {fontSize: '32px', fill: '#000'});
