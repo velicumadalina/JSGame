@@ -19,7 +19,7 @@ let config = {
 let game = new Phaser.Game(config);
 let platforms;
 let player;
-let tp;
+let flour;
 let corona;
 let scoreText;
 let score = 0;
@@ -27,7 +27,7 @@ let gameOver = false;
 
 function preload() {
     this.load.image('ground', '../static/platform.png');
-    this.load.image('tp', '../static/star.png');
+    this.load.image('flour', '../static/gold.png');
     this.load.image('corona', '../static/corona.png');
     this.load.spritesheet('dude', '../static/spritesheet.png', {frameWidth: 45, frameHeight: 38});
 }
@@ -69,26 +69,26 @@ function create() {
         frameRate: 10,
         repeat: -1
     });
-    tp = this.physics.add.staticGroup();
-    tp.create(550, 530, 'tp');
-    tp.create(300, 370, 'tp');
-    tp.create(850, 320, 'tp');
-    tp.create(1200, 520, 'tp');
-    tp.create(1400, 220, 'tp');
-    tp.create(400, 150, 'tp');
-    tp.create(1100, 70, 'tp');
-    tp.create(430, 370, 'tp');
-    tp.create(1650, 370, 'tp');
-    tp.create(950, 320, 'tp');
-    tp.create(1300, 520, 'tp');
-    tp.create(1500, 220, 'tp');
-    tp.create(500, 150, 'tp');
-    tp.create(650, 530, 'tp');
-    tp.create(200, 370, 'tp');
-    tp.create(850, 320, 'tp');
-    tp.create(1400, 520, 'tp');
-    tp.create(350, 150, 'tp');
-    tp.create(990, 70, 'tp');
+    flour = this.physics.add.staticGroup();
+    flour.create(550, 500, 'flour');
+    flour.create(300, 350, 'flour');
+    flour.create(850, 300, 'flour');
+    flour.create(1200, 500, 'flour');
+    flour.create(1400, 200, 'flour');
+    flour.create(400, 120, 'flour');
+    flour.create(1100, 500, 'flour');
+    flour.create(430, 350, 'flour');
+    flour.create(1650, 350, 'flour');
+    flour.create(950, 300, 'flour');
+    flour.create(1300, 500, 'flour');
+    flour.create(1500, 200, 'flour');
+    flour.create(500, 120, 'flour');
+    flour.create(650, 510, 'flour');
+    flour.create(200, 350, 'flour');
+    flour.create(850, 300, 'flour');
+    flour.create(1400, 500, 'flour');
+    flour.create(350, 130, 'flour');
+    flour.create(990, 50, 'flour');
 
     corona = this.physics.add.group({
         key: 'corona',
@@ -105,8 +105,8 @@ function create() {
 
     });
     scoreText = this.add.text(16, 16, 'score: 0', {fontSize: '32px', fill: '#000'});
-    this.physics.add.overlap(player, tp, collect, null, this);
-    this.physics.add.collider(tp, platforms);
+    this.physics.add.overlap(player, flour, collect, null, this);
+    this.physics.add.collider(flour, platforms);
     this.physics.add.collider(corona, platforms);
     this.physics.add.collider(player, corona, getCorona, null, this);
 
@@ -122,8 +122,8 @@ function getCorona(player, corona) {
     gameOver = true;
 }
 
-function collect(player, tp) {
-    tp.disableBody(true, true);
+function collect(player, flour) {
+    flour.disableBody(true, true);
     score += 10;
     scoreText.setText('Score: ' + score);
 
