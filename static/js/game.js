@@ -5,7 +5,7 @@ let config = {
     physics: {
         default: 'arcade',
         arcade: {
-            gravity: {y: 350},
+            gravity: {y: 400},
             debug: false
         }
     },
@@ -109,7 +109,7 @@ function create() {
     corona = this.physics.add.group({
         key: 'corona',
         repeat: 3,
-        setXY: {x: 200, y: -100, stepX: 600}
+        setXY: {x: -100, y: -100, stepX: 1000, stepY:200}
     });
 
     corona.children.iterate(function (child) {
@@ -119,22 +119,37 @@ function create() {
         child.setCollideWorldBounds(true);
 
     });
-    scoreText = this.add.text(16, 16, 'score: 0', {fontSize: '32px', fill: '#000'});
-    livesText = this.add.text(1600, 16, 'lives: 3', {fontSize: '32px', fill: '#000'});
+    scoreText = this.add.text(16, 16, 'score: 0', {fontSize: '32px', fill: '#fff'});
+    livesText = this.add.text(1600, 16, 'lives: 3', {fontSize: '32px', fill: '#fff'});
 
     this.physics.add.overlap(player, tp, collect, null, this);
     this.physics.add.collider(tp, platforms);
     this.physics.add.collider(corona, platforms);
-    this.physics.add.collider(player, corona, getCorona, null, this);
+    this.physics.add.overlap(player, corona, getCorona, null, this);
 
 }
 
 function getCorona(player, corona) {
-    // this.physics.pause();
-    // player.setTint(0xff0000);
-    // player.anims.play('turn');
-    gameOver = true;
+    if (lives > 1) {
+        lives -= 1;
+        livesText.setText('Lives: ' + lives);
+        corona.y=-100;
+        corona.x -= 300;
+        // virusCellDivision(corona);
+    } else {
+        lives -= 1;
+        livesText.setText('Lives: ' + lives);
+        this.physics.pause();
+        player.setTint(0xff0000);
+        player.anims.play('turn');
+        gameOver = true;
+    }
 
+}
+
+function virusCellDivision(corona) {
+    corona.y = 300;
+    corona.enableBody(true, true);
 }
 
 function collect(player, tp) {
