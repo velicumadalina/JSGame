@@ -1,7 +1,12 @@
 let config = {
     type: Phaser.AUTO,
-    width: 1800,
-    height: 800,
+    scale: {
+        mode: Phaser.Scale.FIT,
+        parent: 'phaser-example',
+        autoCenter: Phaser.Scale.CENTER_BOTH,
+        width: 1800,
+        height: 800
+    },
     physics: {
         default: 'arcade',
         arcade: {
@@ -108,7 +113,7 @@ function create() {
     corona = this.physics.add.group({
         key: 'corona',
         repeat: 3,
-        setXY: {x: -100, y: -100, stepX: 1000, stepY:200}
+        setXY: {x: -100, y: -100, stepX: 1000, stepY: 200}
     });
 
     corona.children.iterate(function (child) {
@@ -132,7 +137,7 @@ function getCorona(player, corona) {
     if (lives > 1) {
         lives -= 1;
         livesText.setText('Lives: ' + lives);
-        corona.y=-100;
+        corona.y = -100;
         corona.x -= 300;
     } else {
         lives -= 1;
