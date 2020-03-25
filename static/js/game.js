@@ -143,11 +143,11 @@ function collect(player, tp) {
     scoreText.setText('Score: ' + score);
 }
 
-function life(player, corona) {
-    tp.disableBody(true, true);
-    lives -= 1;
-    livesText.setText('Lives: ' + lives);
-}
+// function life(player, corona) {
+//     tp.disableBody(true, true);
+//     lives -= 1;
+//     livesText.setText('Lives: ' + lives);
+// }
 
 function update() {
     cursors = this.input.keyboard.createCursorKeys();
