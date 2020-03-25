@@ -55,7 +55,6 @@ function create() {
 
     player = this.physics.add.sprite(100, 730, 'dude');
     player.body.setGravityY(300);
-    // player.setBounce(0.2);
     player.setCollideWorldBounds(true);
 
     this.physics.add.collider(player, platforms);
@@ -135,7 +134,6 @@ function getCorona(player, corona) {
         livesText.setText('Lives: ' + lives);
         corona.y=-100;
         corona.x -= 300;
-        // virusCellDivision(corona);
     } else {
         lives -= 1;
         livesText.setText('Lives: ' + lives);
@@ -147,22 +145,12 @@ function getCorona(player, corona) {
 
 }
 
-function virusCellDivision(corona) {
-    corona.y = 300;
-    corona.enableBody(true, true);
-}
 
 function collect(player, tp) {
     tp.disableBody(true, true);
     score += 10;
     scoreText.setText('Score: ' + score);
 }
-
-// function life(player, corona) {
-//     tp.disableBody(true, true);
-//     lives -= 1;
-//     livesText.setText('Lives: ' + lives);
-// }
 
 function update() {
     cursors = this.input.keyboard.createCursorKeys();
