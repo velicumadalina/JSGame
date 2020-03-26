@@ -13,13 +13,23 @@ class level1 extends Phaser.Scene {
         this.load.image('brick', '../static/brick.png');
         this.load.image('brick2', '../static/brick2.png');
         this.load.image('brick3', '../static/brick3.png');
+        this.load.image('cop', '../static/cop.png');
         this.load.spritesheet('dude', '../static/mario.png', {frameWidth: 45, frameHeight: 38});
-        // this.load.audio('mario', '../static/audio/mario.ogg');
+        this.load.audio('mario', '../static/audio/mario.ogg');
     }
 
     create() {
-        // this.songLoader = this.load.audio('song', ['../static/audio/mario.ogg']);
-        // this.sound.play();
+        // this.load.audio('mario',['../static/audio/mario.ogg']);
+        this.sound.play('mario', {
+            mute: false,
+            volume: 1,
+            rate: 1, detune: 0,
+            seek: 0,
+            loop: false,
+            delay: 0
+        });
+
+
         this.add.image(900, 400, 'background');
         this.platforms = this.physics.add.staticGroup();
         this.platforms.create(300, 800, 'ground').setScale().refreshBody();
@@ -147,6 +157,7 @@ class level2 extends Phaser.Scene {
         this.load.image('ground', '../static/ground.png');
         this.load.image('mona', '../static/mona.png');
         this.load.image('corona', '../static/corona.png');
+        this.load.image('cop', '../static/cop.png');
         this.load.spritesheet('dude', '../static/spritesheet.png', {frameWidth: 45, frameHeight: 38});
     }
 
@@ -280,7 +291,8 @@ function getCoronaLives(player, corona, lives, livesText, gameOver) {
         this.player.setTint(0xff0000);
         this.player.anims.play('turn');
         this.gameOver = true;
-        this.gameOverText = this.add.text(900, 400, 'GAME OVER!', {fontSize: '100px', fill: '#fff'});
+        this.gameOverText = this.add.text(900, 560, 'GAME OVER!', {fontSize: '100px', fill: '#000080'});
+        this.add.image(900, 250, 'cop');
         this.gameOverText.setOrigin(0.5);
     }
 }
@@ -301,6 +313,10 @@ let config = {
         width: 1800,
         height: 800
     },
+    audio: {
+        disableWebAudio: true
+    }
+    ,
     physics: {
         default: 'arcade',
         arcade: {
