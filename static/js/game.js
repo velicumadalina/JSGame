@@ -18,8 +18,6 @@ class level1 extends Phaser.Scene {
 
     create() {
         this.add.image(900, 400, 'background');
-        this.scoreText = this.add.text(16, 16, 'score: 0', {fontSize: '32px', fill: '#fff'});
-        this.livesText = this.add.text(1600, 16, 'lives: 3', {fontSize: '32px', fill: '#fff'});
         this.platforms = this.physics.add.staticGroup();
         this.platforms.create(300, 800, 'ground').setScale().refreshBody();
         this.platforms.create(800, 720, 'tube');
@@ -103,6 +101,10 @@ class level1 extends Phaser.Scene {
         this.physics.add.collider(this.tp, this.platforms);
         this.physics.add.collider(this.corona, this.platforms);
         this.physics.add.overlap(this.player, this.corona, getCoronaLives, null, this);
+        this.score = 0;
+        this.scoreText = this.add.text(16, 16, 'score:' + score, {fontSize: '32px', fill: '#fff'});
+        this.lives = 3;
+        this.livesText = this.add.text(1600, 16, 'lives:' + lives, {fontSize: '32px', fill: '#fff'});
 
     }
 
@@ -122,7 +124,7 @@ class level1 extends Phaser.Scene {
         if (this.cursors.space.isDown && this.player.body.touching.down) {
             this.player.setVelocityY(-510);
         }
-        if (this.tp.countActive(true) === 24) {
+        if (this.tp.countActive(true) === 0) {
             this.scene.start('level2');
             // this.scene.start('level2');
         }
@@ -146,8 +148,6 @@ class level2 extends Phaser.Scene {
 
     create() {
         this.add.image(900, 400, 'backgroundl2');
-        let scoreText = this.add.text(16, 16, 'score: 0', {fontSize: '32px', fill: '#fff'});
-        let livesText = this.add.text(1600, 16, 'lives: 3', {fontSize: '32px', fill: '#fff'});
         this.platforms = this.physics.add.staticGroup();
         this.platforms.create(300, 800, 'ground').refreshBody();
         this.platforms.create(550, 570, 'brick');
@@ -206,24 +206,27 @@ class level2 extends Phaser.Scene {
         this.corona = this.physics.add.group({
             key: 'corona',
             repeat: 3,
-            setXY: {x: 200, y: -100, stepX: 600}
+            setXY: {x: 200, y: -100, stepX: 800}
         });
 
         this.corona.children.iterate(function (child) {
 
             child.setBounceY(1);
             child.setBounceX(1);
-            child.setVelocity(300, 300);
+            child.setVelocity(200, 200);
             child.setCollideWorldBounds(true);
 
         });
-        this.scoreText = this.add.text(16, 16, 'score: 0', {fontSize: '32px', fill: '#fff'});
+
         this.gameOver = false;
-        this.score;
         this.physics.add.overlap(this.player, this.flour, collect, null, this);
         this.physics.add.collider(this.flour, this.platforms);
         this.physics.add.collider(this.corona, this.platforms);
-        this.physics.add.collider(this.player, this.corona, getCorona, null, this);
+        this.physics.add.collider(this.player, this.corona, getCoronaLives, null, this);
+        this.score = 0;
+        this.scoreText = this.add.text(16, 16, 'score:' + score, {fontSize: '32px', fill: '#fff'});
+        this.lives = 3;
+        this.livesText = this.add.text(1600, 16, 'lives:' + lives, {fontSize: '32px', fill: '#fff'});
 
     }
 
@@ -251,36 +254,28 @@ class level2 extends Phaser.Scene {
 }
 
 function getCoronaLives(player, corona, lives, livesText, gameOver) {
-    if (lives > 1) {
-        lives -= 1;
-        // livesText.setText('Lives: ' + lives);
+    if (this.lives > 1) {
+        this.lives -= 1;
+        this.livesText.setText('Lives: ' + this.lives);
         corona.y = -100;
         corona.x -= 300;
     } else {
-        lives -= 1;
-        // livesText.setText('Lives: ' + lives);
+        this.lives -= 1;
+        this.livesText.setText('Lives: ' + this.lives);
         this.physics.pause();
-        player.setTint(0xff0000);
-        player.anims.play('turn');
-        gameOver = true;
+        this.player.setTint(0xff0000);
+        this.player.anims.play('turn');
+        this.gameOver = true;
+        this.gameOverText = this.add.text(900, 400, 'GAME OVER!', {fontSize: '64px', fill: '#fff'});
+        this.gameOverText.setOrigin(0.5);
+        this.gameOverText.visible = true;
     }
 }
 
 function collect(player, tp, score, scoreText) {
     tp.disableBody(true, true);
-    // score += 10;
-    // scoreText.setText('Score: ' + score);
-}
-
-function getCorona(player, corona, gameOver) {
-    this.physics.pause();
-    this.player.setTint(0xff0000);
-    this.player.anims.play('turn');
-    this.gameOver = true;
-    this.gameOverText = this.add.text(900, 400, 'GAME OVER!', {fontSize: '64px', fill: '#fff'});
-    this.gameOverText.setOrigin(0.5);
-    this.gameOverText.visible = true;
-
+    this.score += 10;
+    this.scoreText.setText('Score: ' + this.score);
 }
 
 
@@ -305,6 +300,8 @@ let config = {
 };
 let game = new Phaser.Game(config);
 let gameOver = false;
+let score = 0;
+let lives = 3;
 
 
 
