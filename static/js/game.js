@@ -309,7 +309,7 @@ function getCoronaLives(player, corona, lives, livesText, gameOver, theme) {
         this.gameOverText = this.add.text(900, 560, 'GAME OVER!', {fontSize: '100px', fill: '#000080'});
         this.add.image(900, 250, 'cop');
         this.gameOverText.setOrigin(0.5);
-        this.theme.pause();
+      //  this.theme.pause();
     }
 }
 
