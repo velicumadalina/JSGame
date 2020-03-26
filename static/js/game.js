@@ -15,11 +15,11 @@ class level1 extends Phaser.Scene {
         this.load.image('brick3', '../static/brick3.png');
         this.load.image('cop', '../static/cop.png');
         this.load.spritesheet('dude', '../static/mario.png', {frameWidth: 45, frameHeight: 38});
-        this.load.audio('mario', '../static/audio/mario.ogg');
-        this.load.audio('cough', '../static/audio/cough.ogg');
-        this.load.audio('coin', '../static/audio/coin.ogg');
-        this.load.audio('corona', '../static/audio/corona.ogg');
-        this.load.audio('lose', '../static/audio/lose.ogg');
+        //this.load.audio('mario', '../static/audio/mario.ogg');
+       // this.load.audio('cough', '../static/audio/cough.ogg');
+       // this.load.audio('coin', '../static/audio/coin.ogg');
+       // this.load.audio('corona', '../static/audio/corona.ogg');
+        //this.load.audio('lose', '../static/audio/lose.ogg');
     }
 
     create() {
@@ -34,7 +34,7 @@ class level1 extends Phaser.Scene {
         // });
 
         this.theme = document.getElementById('theme');
-        this.theme.play();
+        //this.theme.play();
         this.add.image(900, 400, 'background');
         this.platforms = this.physics.add.staticGroup();
         this.platforms.create(300, 800, 'ground').setScale().refreshBody();
@@ -142,7 +142,7 @@ class level1 extends Phaser.Scene {
         }
         if (this.cursors.space.isDown && this.player.body.touching.down) {
             this.player.setVelocityY(-510);
-            this.sound.play('cough')
+            //  this.sound.play('cough')
         }
         if (this.tp.countActive(true) === 0) {
             this.scene.start('level2');
@@ -165,17 +165,17 @@ class level2 extends Phaser.Scene {
         this.load.image('mona', '../static/mona.png');
         this.load.image('corona', '../static/corona.png');
         this.load.image('cop', '../static/cop.png');
-        this.load.audio('cough', '../static/audio/cough.ogg');
-        this.load.audio('coin', '../static/audio/coin.ogg');
-        this.load.audio('corona', '../static/audio/corona.ogg');
-        this.load.audio('winner', '../static/audio/win.ogg');
-        this.load.audio('lose', '../static/audio/lose.ogg');
+        //this.load.audio('cough', '../static/audio/cough.ogg');
+        //this.load.audio('coin', '../static/audio/coin.ogg');
+        //this.load.audio('corona', '../static/audio/corona.ogg');
+        //this.load.audio('winner', '../static/audio/win.ogg');
+        //this.load.audio('lose', '../static/audio/lose.ogg');
         this.load.spritesheet('dude', '../static/spritesheet.png', {frameWidth: 45, frameHeight: 38});
     }
 
     create() {
         this.theme = document.getElementById('theme');
-        this.theme.play();
+       // this.theme.play();
         this.add.image(900, 400, 'backgroundl2');
         this.platforms = this.physics.add.staticGroup();
         this.platforms.create(300, 800, 'ground').refreshBody();
@@ -250,7 +250,7 @@ class level2 extends Phaser.Scene {
             child.setCollideWorldBounds(true);
 
         });
-        this.winner = this.sound.add('winner');
+        //this.winner = this.sound.add('winner');
         this.gameOver = false;
         this.physics.add.overlap(this.player, this.mona, collectLvl, null, this);
         this.physics.add.collider(this.mona, this.platforms);
@@ -275,13 +275,12 @@ class level2 extends Phaser.Scene {
             this.player.anims.play('right', true);
         } else {
             this.player.setVelocityX(0);
-
             this.player.anims.play('turn');
         }
 
         if (this.cursors.space.isDown && this.player.body.touching.down) {
             this.player.setVelocityY(-510);
-            this.sound.play('cough');
+           // this.sound.play('cough');
         }
         if (this.mona.countActive(true) === 0) {
             this.youWin = this.add.text(900, 500, 'YOU WIN!', {fontSize: '100px', fill: '#000080'});
@@ -294,7 +293,7 @@ class level2 extends Phaser.Scene {
 
 function getCoronaLives(player, corona, lives, livesText, gameOver, theme) {
     if (this.lives > 1) {
-        this.sound.play('corona');
+        //this.sound.play('corona');
         this.lives -= 1;
         this.livesText.setText('LIVES: ' + this.lives);
         corona.y = -100;
@@ -302,7 +301,7 @@ function getCoronaLives(player, corona, lives, livesText, gameOver, theme) {
     } else {
         this.lives -= 1;
         this.livesText.setText('LIVES: ' + this.lives);
-        this.sound.play('lose');
+       // this.sound.play('lose');
         this.physics.pause();
         this.player.setTint(0xff0000);
         this.player.anims.play('turn');
@@ -316,20 +315,20 @@ function getCoronaLives(player, corona, lives, livesText, gameOver, theme) {
 
 function collect(player, tp, score, scoreText) {
     tp.disableBody(true, true);
-    this.sound.play('coin');
+   // this.sound.play('coin');
     this.score += 10;
     this.scoreText.setText('SCORE: ' + this.score);
 }
 
 function collectLvl(player, tp, score, scoreText, theme) {
     tp.disableBody(true, true);
-    this.sound.play('coin');
+    // this.sound.play('coin');
     this.score += 10;
     this.scoreText.setText('SCORE: ' + this.score);
-    if (this.tp.countActive(true) === 0) {
-        this.theme.pause();
-        this.sound.play('winner');
-    }
+    // if (this.tp.countActive(true) === 0) {
+    //     this.theme.pause();
+    //     this.sound.play('winner');
+    // }
 
 }
 
@@ -343,10 +342,10 @@ let config = {
         width: 1800,
         height: 800
     },
-    audio: {
-        disableWebAudio: true
-    }
-    ,
+    // audio: {
+    //     disableWebAudio: true
+    // }
+    // ,
     physics: {
         default: 'arcade',
         arcade: {
@@ -362,8 +361,8 @@ let gameOver = false;
 let score = 0;
 let lives = 3;
 let theme = document.getElementById('theme');
-window.onload = theme.play();
-window.onbeforeunload = theme.play();
+//window.onload = theme.play();
+//window.onbeforeunload = theme.play();
 
 
 
