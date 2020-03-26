@@ -121,7 +121,7 @@ class level1 extends Phaser.Scene {
         if (this.cursors.space.isDown && this.player.body.touching.down) {
             this.player.setVelocityY(-510);
         }
-        if (this.tp.countActive(true) == 22) {
+        if (this.tp.countActive(true) == 0) {
             this.scene.start('level2');
             // this.scene.start('level2');
         }
