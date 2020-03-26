@@ -33,7 +33,8 @@ class level1 extends Phaser.Scene {
         //     delay: 0
         // });
 
-
+        this.theme = document.getElementById('theme');
+        this.theme.play();
         this.add.image(900, 400, 'background');
         this.platforms = this.physics.add.staticGroup();
         this.platforms.create(300, 800, 'ground').setScale().refreshBody();
@@ -122,7 +123,6 @@ class level1 extends Phaser.Scene {
         this.scoreText = this.add.text(16, 16, 'SCORE:' + score, {fontSize: '32px', fill: '#fff'});
         this.lives = 3;
         this.livesText = this.add.text(1600, 16, 'LIVES:' + lives, {fontSize: '32px', fill: '#fff'});
-        this.theme = document.getElementById('theme');
 
 
     }
@@ -144,7 +144,7 @@ class level1 extends Phaser.Scene {
             this.player.setVelocityY(-510);
             this.sound.play('cough')
         }
-        if (this.tp.countActive(true) === 22) {
+        if (this.tp.countActive(true) === 0) {
             this.scene.start('level2');
         }
     }
@@ -174,6 +174,8 @@ class level2 extends Phaser.Scene {
     }
 
     create() {
+        this.theme = document.getElementById('theme');
+        this.theme.play();
         this.add.image(900, 400, 'backgroundl2');
         this.platforms = this.physics.add.staticGroup();
         this.platforms.create(300, 800, 'ground').refreshBody();
@@ -258,8 +260,6 @@ class level2 extends Phaser.Scene {
         this.scoreText = this.add.text(16, 16, 'SCORE:' + score, {fontSize: '32px', fill: '#000080'});
         this.lives = 3;
         this.livesText = this.add.text(1600, 16, 'LIVES:' + lives, {fontSize: '32px', fill: '#000080'});
-        this.theme = document.getElementById('theme');
-
     }
 
 
@@ -283,7 +283,7 @@ class level2 extends Phaser.Scene {
             this.player.setVelocityY(-510);
             this.sound.play('cough');
         }
-        if (this.mona.countActive(true) === 19) {
+        if (this.mona.countActive(true) === 0) {
             this.youWin = this.add.text(900, 500, 'YOU WIN!', {fontSize: '100px', fill: '#000080'});
             this.youWin.setOrigin(0.5);
             this.add.image(900, 250, 'win');
@@ -326,12 +326,12 @@ function collectLvl(player, tp, score, scoreText, theme) {
     this.sound.play('coin');
     this.score += 10;
     this.scoreText.setText('SCORE: ' + this.score);
-    this.sound.play('winner');
-    this.theme.pause();
-
+    if (this.tp.countActive(true) === 0) {
+        this.theme.pause();
+        this.sound.play('winner');
+    }
 
 }
-
 
 
 let config = {
@@ -361,8 +361,9 @@ let game = new Phaser.Game(config);
 let gameOver = false;
 let score = 0;
 let lives = 3;
-
-
+let theme = document.getElementById('theme');
+window.onload = theme.play();
+window.onbeforeunload = theme.play();
 
 
 
