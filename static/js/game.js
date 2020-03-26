@@ -16,18 +16,22 @@ class level1 extends Phaser.Scene {
         this.load.image('cop', '../static/cop.png');
         this.load.spritesheet('dude', '../static/mario.png', {frameWidth: 45, frameHeight: 38});
         this.load.audio('mario', '../static/audio/mario.ogg');
+        this.load.audio('cough', '../static/audio/cough.ogg');
+        this.load.audio('coin', '../static/audio/coin.ogg');
+        this.load.audio('corona', '../static/audio/corona.ogg');
+        this.load.audio('lose', '../static/audio/lose.ogg');
     }
 
     create() {
         // this.load.audio('mario',['../static/audio/mario.ogg']);
-        this.sound.play('mario', {
-            mute: false,
-            volume: 1,
-            rate: 1, detune: 0,
-            seek: 0,
-            loop: false,
-            delay: 0
-        });
+        // this.sound.play('mario', {
+        //     mute: false,
+        //     volume: 1,
+        //     rate: 1, detune: 0,
+        //     seek: 0,
+        //     loop: false,
+        //     delay: 0
+        // });
 
 
         this.add.image(900, 400, 'background');
@@ -119,6 +123,7 @@ class level1 extends Phaser.Scene {
         this.lives = 3;
         this.livesText = this.add.text(1600, 16, 'LIVES:' + lives, {fontSize: '32px', fill: '#fff'});
 
+
     }
 
 
@@ -136,8 +141,9 @@ class level1 extends Phaser.Scene {
         }
         if (this.cursors.space.isDown && this.player.body.touching.down) {
             this.player.setVelocityY(-510);
+            this.sound.play('cough')
         }
-        if (this.tp.countActive(true) === 24) {
+        if (this.tp.countActive(true) === 22) {
             this.scene.start('level2');
         }
     }
@@ -158,6 +164,11 @@ class level2 extends Phaser.Scene {
         this.load.image('mona', '../static/mona.png');
         this.load.image('corona', '../static/corona.png');
         this.load.image('cop', '../static/cop.png');
+        this.load.audio('cough', '../static/audio/cough.ogg');
+        this.load.audio('coin', '../static/audio/coin.ogg');
+        this.load.audio('corona', '../static/audio/corona.ogg');
+        this.load.audio('winner', '../static/audio/win.ogg');
+        this.load.audio('lose', '../static/audio/lose.ogg');
         this.load.spritesheet('dude', '../static/spritesheet.png', {frameWidth: 45, frameHeight: 38});
     }
 
@@ -246,7 +257,6 @@ class level2 extends Phaser.Scene {
         this.scoreText = this.add.text(16, 16, 'SCORE:' + score, {fontSize: '32px', fill: '#000080'});
         this.lives = 3;
         this.livesText = this.add.text(1600, 16, 'LIVES:' + lives, {fontSize: '32px', fill: '#000080'});
-
     }
 
 
@@ -268,6 +278,7 @@ class level2 extends Phaser.Scene {
 
         if (this.cursors.space.isDown && this.player.body.touching.down) {
             this.player.setVelocityY(-510);
+            this.sound.play('cough');
         }
         if (this.mona.countActive(true) === 19) {
             this.youWin = this.add.text(900, 500, 'YOU WIN!', {fontSize: '100px', fill: '#000080'});
@@ -275,11 +286,15 @@ class level2 extends Phaser.Scene {
             this.add.image(900, 250, 'win');
             this.physics.pause();
         }
+        if (this.mona.countActive(true) === 19 && this.cursors.down.isDown) {
+            this.sound.play('winner');
+        }
     }
 }
 
 function getCoronaLives(player, corona, lives, livesText, gameOver) {
     if (this.lives > 1) {
+        this.sound.play('corona');
         this.lives -= 1;
         this.livesText.setText('LIVES: ' + this.lives);
         corona.y = -100;
@@ -287,6 +302,7 @@ function getCoronaLives(player, corona, lives, livesText, gameOver) {
     } else {
         this.lives -= 1;
         this.livesText.setText('LIVES: ' + this.lives);
+        this.sound.play('lose');
         this.physics.pause();
         this.player.setTint(0xff0000);
         this.player.anims.play('turn');
@@ -299,10 +315,15 @@ function getCoronaLives(player, corona, lives, livesText, gameOver) {
 
 function collect(player, tp, score, scoreText) {
     tp.disableBody(true, true);
+    this.sound.play('coin');
     this.score += 10;
     this.scoreText.setText('SCORE: ' + this.score);
 }
 
+function win(mona) {
+    if (this.mona.countActive(true) === 19)
+        this.sound.play('win')
+}
 
 let config = {
     type: Phaser.AUTO,
@@ -331,6 +352,8 @@ let game = new Phaser.Game(config);
 let gameOver = false;
 let score = 0;
 let lives = 3;
+
+
 
 
 
