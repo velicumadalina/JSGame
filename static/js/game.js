@@ -321,12 +321,12 @@ function collect(player, tp, score, scoreText) {
     this.scoreText.setText('SCORE: ' + this.score);
 }
 
-function collectLvl(player, tp, score, scoreText, theme) {
-    tp.disableBody(true, true);
+function collectLvl(player, mona, score, scoreText, theme) {
+    mona.disableBody(true, true);
     this.sound.play('coin');
     this.score += 10;
     this.scoreText.setText('SCORE: ' + this.score);
-    if (this.tp.countActive(true) === 0) {
+    if (this.mona.countActive(true) === 0) {
         this.theme.pause();
         this.sound.play('winner');
     }
