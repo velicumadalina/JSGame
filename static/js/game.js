@@ -247,9 +247,9 @@ class level2 extends Phaser.Scene {
             child.setCollideWorldBounds(true);
 
         });
-
+        this.winner = this.sound.add('winner');
         this.gameOver = false;
-        this.physics.add.overlap(this.player, this.mona, collect, null, this);
+        this.physics.add.overlap(this.player, this.mona, collectLvl, null, this);
         this.physics.add.collider(this.mona, this.platforms);
         this.physics.add.collider(this.corona, this.platforms);
         this.physics.add.collider(this.player, this.corona, getCoronaLives, null, this);
@@ -286,9 +286,6 @@ class level2 extends Phaser.Scene {
             this.add.image(900, 250, 'win');
             this.physics.pause();
         }
-        if (this.mona.countActive(true) === 19 && this.cursors.down.isDown) {
-            this.sound.play('winner');
-        }
     }
 }
 
@@ -320,10 +317,15 @@ function collect(player, tp, score, scoreText) {
     this.scoreText.setText('SCORE: ' + this.score);
 }
 
-function win(mona) {
-    if (this.mona.countActive(true) === 19)
-        this.sound.play('win')
+function collectLvl(player, tp, score, scoreText) {
+    tp.disableBody(true, true);
+    this.sound.play('coin');
+    this.score += 10;
+    this.scoreText.setText('SCORE: ' + this.score);
+    this.sound.play('winner');
 }
+
+
 
 let config = {
     type: Phaser.AUTO,
