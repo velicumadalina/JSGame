@@ -122,6 +122,7 @@ class level1 extends Phaser.Scene {
         this.scoreText = this.add.text(16, 16, 'SCORE:' + score, {fontSize: '32px', fill: '#fff'});
         this.lives = 3;
         this.livesText = this.add.text(1600, 16, 'LIVES:' + lives, {fontSize: '32px', fill: '#fff'});
+        this.theme = document.getElementById('theme');
 
 
     }
@@ -257,6 +258,8 @@ class level2 extends Phaser.Scene {
         this.scoreText = this.add.text(16, 16, 'SCORE:' + score, {fontSize: '32px', fill: '#000080'});
         this.lives = 3;
         this.livesText = this.add.text(1600, 16, 'LIVES:' + lives, {fontSize: '32px', fill: '#000080'});
+        this.theme = document.getElementById('theme');
+
     }
 
 
@@ -289,7 +292,7 @@ class level2 extends Phaser.Scene {
     }
 }
 
-function getCoronaLives(player, corona, lives, livesText, gameOver) {
+function getCoronaLives(player, corona, lives, livesText, gameOver, theme) {
     if (this.lives > 1) {
         this.sound.play('corona');
         this.lives -= 1;
@@ -307,6 +310,7 @@ function getCoronaLives(player, corona, lives, livesText, gameOver) {
         this.gameOverText = this.add.text(900, 560, 'GAME OVER!', {fontSize: '100px', fill: '#000080'});
         this.add.image(900, 250, 'cop');
         this.gameOverText.setOrigin(0.5);
+        this.theme.pause();
     }
 }
 
@@ -317,12 +321,15 @@ function collect(player, tp, score, scoreText) {
     this.scoreText.setText('SCORE: ' + this.score);
 }
 
-function collectLvl(player, tp, score, scoreText) {
+function collectLvl(player, tp, score, scoreText, theme) {
     tp.disableBody(true, true);
     this.sound.play('coin');
     this.score += 10;
     this.scoreText.setText('SCORE: ' + this.score);
     this.sound.play('winner');
+    this.theme.pause();
+
+
 }
 
 
@@ -354,6 +361,7 @@ let game = new Phaser.Game(config);
 let gameOver = false;
 let score = 0;
 let lives = 3;
+
 
 
 
