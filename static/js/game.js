@@ -17,9 +17,9 @@ class level1 extends Phaser.Scene {
     }
 
     create() {
+        this.add.image(900, 400, 'background');
         this.scoreText = this.add.text(16, 16, 'score: 0', {fontSize: '32px', fill: '#fff'});
         this.livesText = this.add.text(1600, 16, 'lives: 3', {fontSize: '32px', fill: '#fff'});
-        this.add.image(900, 400, 'background');
         this.platforms = this.physics.add.staticGroup();
         this.platforms.create(300, 800, 'ground').setScale().refreshBody();
         this.platforms.create(800, 720, 'tube');
@@ -122,7 +122,7 @@ class level1 extends Phaser.Scene {
         if (this.cursors.space.isDown && this.player.body.touching.down) {
             this.player.setVelocityY(-510);
         }
-        if (this.tp.countActive(true) == 0) {
+        if (this.tp.countActive(true) === 24) {
             this.scene.start('level2');
             // this.scene.start('level2');
         }
@@ -136,14 +136,16 @@ class level2 extends Phaser.Scene {
     }
 
     preload() {
+        this.load.image('backgroundl2', '../static/backgroundl2.png');
         this.load.image('brick', '../static/brick2.png');
         this.load.image('ground', '../static/ground.png');
-        this.load.image('flour', '../static/flour.png');
+        this.load.image('flour', '../static/mona.png');
         this.load.image('corona', '../static/corona.png');
         this.load.spritesheet('dude', '../static/spritesheet.png', {frameWidth: 45, frameHeight: 38});
     }
 
     create() {
+        this.add.image(900, 400, 'backgroundl2');
         let scoreText = this.add.text(16, 16, 'score: 0', {fontSize: '32px', fill: '#fff'});
         let livesText = this.add.text(1600, 16, 'lives: 3', {fontSize: '32px', fill: '#fff'});
         this.platforms = this.physics.add.staticGroup();
@@ -215,7 +217,7 @@ class level2 extends Phaser.Scene {
             child.setCollideWorldBounds(true);
 
         });
-        this.scoreText = this.add.text(16, 16, 'score: 0', {fontSize: '32px', fill: '#000'});
+        this.scoreText = this.add.text(16, 16, 'score: 0', {fontSize: '32px', fill: '#fff'});
         this.gameOver = false;
         this.score;
         this.physics.add.overlap(this.player, this.flour, collect, null, this);
@@ -262,20 +264,24 @@ function getCoronaLives(player, corona, lives, livesText, gameOver) {
         player.anims.play('turn');
         gameOver = true;
     }
-};
+}
 
 function collect(player, tp, score, scoreText) {
     tp.disableBody(true, true);
     // score += 10;
     // scoreText.setText('Score: ' + score);
-};
+}
 
 function getCorona(player, corona, gameOver) {
     this.physics.pause();
     this.player.setTint(0xff0000);
     this.player.anims.play('turn');
-    gameOver = true;
-};
+    this.gameOver = true;
+    this.gameOverText = this.add.text(900, 400, 'GAME OVER!', {fontSize: '64px', fill: '#fff'});
+    this.gameOverText.setOrigin(0.5);
+    this.gameOverText.visible = true;
+
+}
 
 
 let config = {
@@ -298,8 +304,6 @@ let config = {
 
 };
 let game = new Phaser.Game(config);
-let score = 0;
-let lives = 3;
 let gameOver = false;
 
 
