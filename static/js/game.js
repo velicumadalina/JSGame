@@ -14,9 +14,12 @@ class level1 extends Phaser.Scene {
         this.load.image('brick2', '../static/brick2.png');
         this.load.image('brick3', '../static/brick3.png');
         this.load.spritesheet('dude', '../static/mario.png', {frameWidth: 45, frameHeight: 38});
+        // this.load.audio('mario', '../static/audio/mario.ogg');
     }
 
     create() {
+        // this.songLoader = this.load.audio('song', ['../static/audio/mario.ogg']);
+        // this.sound.play();
         this.add.image(900, 400, 'background');
         this.platforms = this.physics.add.staticGroup();
         this.platforms.create(300, 800, 'ground').setScale().refreshBody();
@@ -102,9 +105,9 @@ class level1 extends Phaser.Scene {
         this.physics.add.collider(this.corona, this.platforms);
         this.physics.add.overlap(this.player, this.corona, getCoronaLives, null, this);
         this.score = 0;
-        this.scoreText = this.add.text(16, 16, 'score:' + score, {fontSize: '32px', fill: '#fff'});
+        this.scoreText = this.add.text(16, 16, 'SCORE:' + score, {fontSize: '32px', fill: '#fff'});
         this.lives = 3;
-        this.livesText = this.add.text(1600, 16, 'lives:' + lives, {fontSize: '32px', fill: '#fff'});
+        this.livesText = this.add.text(1600, 16, 'LIVES:' + lives, {fontSize: '32px', fill: '#fff'});
 
     }
 
@@ -124,9 +127,8 @@ class level1 extends Phaser.Scene {
         if (this.cursors.space.isDown && this.player.body.touching.down) {
             this.player.setVelocityY(-510);
         }
-        if (this.tp.countActive(true) === 0) {
+        if (this.tp.countActive(true) === 24) {
             this.scene.start('level2');
-            // this.scene.start('level2');
         }
     }
 }
@@ -139,9 +141,11 @@ class level2 extends Phaser.Scene {
 
     preload() {
         this.load.image('backgroundl2', '../static/backgroundl2.png');
+        this.load.image('win', '../static/win.png');
+        this.load.image('tube', '../static/tube.png');
         this.load.image('brick', '../static/brick2.png');
         this.load.image('ground', '../static/ground.png');
-        this.load.image('flour', '../static/mona.png');
+        this.load.image('mona', '../static/mona.png');
         this.load.image('corona', '../static/corona.png');
         this.load.spritesheet('dude', '../static/spritesheet.png', {frameWidth: 45, frameHeight: 38});
     }
@@ -150,14 +154,17 @@ class level2 extends Phaser.Scene {
         this.add.image(900, 400, 'backgroundl2');
         this.platforms = this.physics.add.staticGroup();
         this.platforms.create(300, 800, 'ground').refreshBody();
-        this.platforms.create(550, 570, 'brick');
-        this.platforms.create(300, 420, 'brick');
-        this.platforms.create(1600, 420, 'brick');
-        this.platforms.create(850, 370, 'brick');
-        this.platforms.create(1200, 580, 'brick');
-        this.platforms.create(1400, 270, 'brick');
-        this.platforms.create(400, 200, 'brick');
-        this.platforms.create(1100, 120, 'brick');
+        this.platforms.create(250, 720, 'tube');
+        this.platforms.create(800, 720, 'tube');
+        this.platforms.create(1600, 720, 'tube');
+        this.platforms.create(500, 550, 'brick');
+        this.platforms.create(1200, 550, 'brick2');
+        this.platforms.create(1700, 370, 'brick');
+        this.platforms.create(200, 370, 'brick2');
+        this.platforms.create(1000, 370, 'brick');
+        this.platforms.create(200, 200, 'brick');
+        this.platforms.create(1500, 200, 'brick');
+        this.platforms.create(700, 200, 'brick');
         this.player = this.physics.add.sprite(100, 450, 'dude');
         this.player.body.setGravityY(300);
         this.player.setBounce(0.2);
@@ -182,26 +189,27 @@ class level2 extends Phaser.Scene {
             frameRate: 10,
             repeat: -1
         });
-        this.flour = this.physics.add.staticGroup();
-        this.flour.create(550, 500, 'flour');
-        this.flour.create(300, 350, 'flour');
-        this.flour.create(850, 300, 'flour');
-        this.flour.create(1200, 500, 'flour');
-        this.flour.create(1400, 200, 'flour');
-        this.flour.create(400, 120, 'flour');
-        this.flour.create(1100, 500, 'flour');
-        this.flour.create(430, 350, 'flour');
-        this.flour.create(1650, 350, 'flour');
-        this.flour.create(950, 300, 'flour');
-        this.flour.create(1300, 500, 'flour');
-        this.flour.create(1500, 200, 'flour');
-        this.flour.create(500, 120, 'flour');
-        this.flour.create(650, 510, 'flour');
-        this.flour.create(200, 350, 'flour');
-        this.flour.create(850, 300, 'flour');
-        this.flour.create(1400, 500, 'flour');
-        this.flour.create(350, 130, 'flour');
-        this.flour.create(990, 50, 'flour');
+        this.mona = this.physics.add.staticGroup();
+        this.mona.create(450, 470, 'mona');
+        this.mona.create(550, 470, 'mona');
+        this.mona.create(1050, 470, 'mona');
+        this.mona.create(1150, 470, 'mona');
+        this.mona.create(1250, 470, 'mona');
+        this.mona.create(1350, 470, 'mona');
+        this.mona.create(50, 290, 'mona');
+        this.mona.create(150, 290, 'mona');
+        this.mona.create(250, 290, 'mona');
+        this.mona.create(350, 290, 'mona');
+        this.mona.create(950, 290, 'mona');
+        this.mona.create(1050, 290, 'mona');
+        this.mona.create(1650, 290, 'mona');
+        this.mona.create(1750, 290, 'mona');
+        this.mona.create(1550, 120, 'mona');
+        this.mona.create(1450, 120, 'mona');
+        this.mona.create(650, 120, 'mona');
+        this.mona.create(750, 120, 'mona');
+        this.mona.create(150, 120, 'mona');
+        this.mona.create(250, 120, 'mona');
 
         this.corona = this.physics.add.group({
             key: 'corona',
@@ -213,20 +221,20 @@ class level2 extends Phaser.Scene {
 
             child.setBounceY(1);
             child.setBounceX(1);
-            child.setVelocity(200, 200);
+            child.setVelocity(100, 100);
             child.setCollideWorldBounds(true);
 
         });
 
         this.gameOver = false;
-        this.physics.add.overlap(this.player, this.flour, collect, null, this);
-        this.physics.add.collider(this.flour, this.platforms);
+        this.physics.add.overlap(this.player, this.mona, collect, null, this);
+        this.physics.add.collider(this.mona, this.platforms);
         this.physics.add.collider(this.corona, this.platforms);
         this.physics.add.collider(this.player, this.corona, getCoronaLives, null, this);
         this.score = 0;
-        this.scoreText = this.add.text(16, 16, 'score:' + score, {fontSize: '32px', fill: '#fff'});
+        this.scoreText = this.add.text(16, 16, 'SCORE:' + score, {fontSize: '32px', fill: '#000080'});
         this.lives = 3;
-        this.livesText = this.add.text(1600, 16, 'lives:' + lives, {fontSize: '32px', fill: '#fff'});
+        this.livesText = this.add.text(1600, 16, 'LIVES:' + lives, {fontSize: '32px', fill: '#000080'});
 
     }
 
@@ -248,7 +256,13 @@ class level2 extends Phaser.Scene {
         }
 
         if (this.cursors.space.isDown && this.player.body.touching.down) {
-            this.player.setVelocityY(-600);
+            this.player.setVelocityY(-510);
+        }
+        if (this.mona.countActive(true) === 19) {
+            this.youWin = this.add.text(900, 500, 'YOU WIN!', {fontSize: '100px', fill: '#000080'});
+            this.youWin.setOrigin(0.5);
+            this.add.image(900, 250, 'win');
+            this.physics.pause();
         }
     }
 }
@@ -256,26 +270,25 @@ class level2 extends Phaser.Scene {
 function getCoronaLives(player, corona, lives, livesText, gameOver) {
     if (this.lives > 1) {
         this.lives -= 1;
-        this.livesText.setText('Lives: ' + this.lives);
+        this.livesText.setText('LIVES: ' + this.lives);
         corona.y = -100;
         corona.x -= 300;
     } else {
         this.lives -= 1;
-        this.livesText.setText('Lives: ' + this.lives);
+        this.livesText.setText('LIVES: ' + this.lives);
         this.physics.pause();
         this.player.setTint(0xff0000);
         this.player.anims.play('turn');
         this.gameOver = true;
-        this.gameOverText = this.add.text(900, 400, 'GAME OVER!', {fontSize: '64px', fill: '#fff'});
+        this.gameOverText = this.add.text(900, 400, 'GAME OVER!', {fontSize: '100px', fill: '#fff'});
         this.gameOverText.setOrigin(0.5);
-        this.gameOverText.visible = true;
     }
 }
 
 function collect(player, tp, score, scoreText) {
     tp.disableBody(true, true);
     this.score += 10;
-    this.scoreText.setText('Score: ' + this.score);
+    this.scoreText.setText('SCORE: ' + this.score);
 }
 
 
